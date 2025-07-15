@@ -37,3 +37,5 @@ urlSchema.methods.incrementAccessCount = function () {
   this.accessCount += 1;
   this.save();
 };
+
+module.exports = mongoose.model("Url", urlSchema);

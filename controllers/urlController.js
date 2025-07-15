@@ -60,6 +60,7 @@ const createShortUrl = async (req, res) => {
       updatedAt: newUrl.updatedAt,
     });
   } catch (error) {
+    console.error(error);
     if (error.name === "ValidationError") {
       return res.status(400).json({
         error: "Validation Error",
@@ -97,6 +98,7 @@ const getOriginalUrl = async (req, res) => {
       updatedAt: url.updatedAt,
     });
   } catch (error) {
+    console.error(error);
     res.status(500).json({
       error: "Internal Server Error",
       message: "An error occurred while retrieving the URL",
@@ -137,6 +139,7 @@ const updateShortUrl = async (req, res) => {
       updatedAt: urlDoc.updatedAt,
     });
   } catch (error) {
+    console.error(error);
     if (error.name === "ValidationError") {
       return res.status(400).json({
         error: "Validation Error",
@@ -165,6 +168,7 @@ const deleteShortUrl = async (req, res) => {
 
     res.status(204).send();
   } catch (error) {
+    console.error(error);
     res.status(500).json({
       error: "Internal Server Error",
       message: "An error occurred while deleting the URL",
@@ -195,6 +199,7 @@ const getUrlStats = async (req, res) => {
       accessCount: url.accessCount,
     });
   } catch (error) {
+    console.error(error);
     res.status(500).json({
       error: "Internal Server Error",
       message: "An error occurred while retrieving URL statistics",
