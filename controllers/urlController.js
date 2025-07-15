@@ -60,7 +60,16 @@ const createShortUrl = async (req, res) => {
       updatedAt: newUrl.updatedAt,
     });
   } catch (error) {
-    next(error);
+    if (error.name === "ValidationError") {
+      return res.status(400).json({
+        error: "Validation Error",
+        message: error.message,
+      });
+    }
+    res.status(500).json({
+      error: "Internal Server Error",
+      message: "An error occurred while creating the short URL",
+    });
   }
 };
 
@@ -88,7 +97,10 @@ const getOriginalUrl = async (req, res) => {
       updatedAt: url.updatedAt,
     });
   } catch (error) {
-    next(error);
+    res.status(500).json({
+      error: "Internal Server Error",
+      message: "An error occurred while retrieving the URL",
+    });
   }
 };
 
@@ -125,7 +137,16 @@ const updateShortUrl = async (req, res) => {
       updatedAt: urlDoc.updatedAt,
     });
   } catch (error) {
-    next(error);
+    if (error.name === "ValidationError") {
+      return res.status(400).json({
+        error: "Validation Error",
+        message: error.message,
+      });
+    }
+    res.status(500).json({
+      error: "Internal Server Error",
+      message: "An error occurred while updating the URL",
+    });
   }
 };
 
@@ -144,7 +165,10 @@ const deleteShortUrl = async (req, res) => {
 
     res.status(204).send();
   } catch (error) {
-    next(error);
+    res.status(500).json({
+      error: "Internal Server Error",
+      message: "An error occurred while deleting the URL",
+    });
   }
 };
 
@@ -171,7 +195,10 @@ const getUrlStats = async (req, res) => {
       accessCount: url.accessCount,
     });
   } catch (error) {
-    next(error);
+    res.status(500).json({
+      error: "Internal Server Error",
+      message: "An error occurred while retrieving URL statistics",
+    });
   }
 };
 
